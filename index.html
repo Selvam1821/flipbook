@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selvam S - Full Stack Developer Portfolio</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            border: none;
+            outline: none;
+            font-family: "Poppins", sans-serif;
+        }
+
+        :root {
+            --bg-color: #0a0e27;
+            --main-color: #6c63ff;
+            --secondary-color: #4834df;
+            --accent-color: #00d2ff;
+            --text-color: #2c3e50;
+            --second-text-color: #546e7a;
+            --white-color: #ffffff;
+            --light-accent: #e8eaf6;
+            --cover-color: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            --pages-color: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            --border: 0.125rem solid #6c63ff;
+            --box-shadow: 0 0 1rem rgba(108, 99, 255, 0.5);
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: var(--bg-color);
+            color: var(--text-color);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated Background Particles */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(108, 99, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(0, 210, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+            animation: bgMove 20s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes bgMove {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+        }
+
+        /* Floating Particles */
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--main-color);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .loader {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(108, 99, 255, 0.2);
+            border-top: 4px solid var(--main-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            position: relative;
+        }
+
+        .loader-spinner::after {
+            content: "";
+            position: absolute;
+            inset: 8px;
+            border: 4px solid rgba(0, 210, 255, 0.3);
+            border-top: 4px solid var(--accent-color);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite reverse;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            color: var(--main-color);
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            animation: pulse 1.5s ease-in-out infinite;
+            font-weight: 600;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        .wrapper {
+            position: relative;
+            width: 66rem;
+            height: 45rem;
+            padding: 2rem;
+            perspective: 250rem;
+            animation: show-animate 2s forwards;
+        }
+
+        @keyframes show-animate {
+            0%, 30% {
+                opacity: 0;
+                transform: rotate(-20deg) scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: rotate(0deg) scale(1);
+            }
+        }
+
+        .cover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            background: var(--cover-color);
+            box-shadow: 0 0 2rem rgba(108, 99, 255, 0.7);
+            border-top-left-radius: 0.6rem;
+            border-bottom-left-radius: 0.6rem;
+            transform-origin: right;
+            overflow: hidden;
+        }
+
+        /* Animated Cover Pattern */
+        .cover::before {
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 255, 255, 0.05) 10px,
+                rgba(255, 255, 255, 0.05) 20px
+            );
+            animation: coverPattern 20s linear infinite;
+        }
+
+        @keyframes coverPattern {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        .cover.cover-left {
+            z-index: -1;
+        }
+
+        .cover.cover-right {
+            z-index: 100;
+            transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        .cover.cover-right.turn {
+            transform: rotateY(180deg);
+        }
+
+        .book {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            perspective: 250rem;
+        }
+
+        .book .book-page {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            background: var(--pages-color);
+            box-shadow: 0 0 1.2rem rgba(108, 99, 255, 0.3);
+            display: flex;
+            padding: 2rem;
+        }
+
+        .profile-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-page img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            margin-bottom: 0.8rem;
+            object-fit: cover;
+            border: 4px solid var(--main-color);
+            animation: profileFloat 3s ease-in-out infinite;
+            box-shadow: 0 0 30px rgba(108, 99, 255, 0.6);
+            position: relative;
+        }
+
+        @keyframes profileFloat {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+                box-shadow: 0 0 20px rgba(108, 99, 255, 0.6), 0 0 40px rgba(0, 210, 255, 0.4);
+            }
+            50% {
+                transform: translateY(-10px) scale(1.02);
+                box-shadow: 0 10px 40px rgba(108, 99, 255, 0.8), 0 0 60px rgba(0, 210, 255, 0.6);
+            }
+        }
+
+        /* Glowing ring around profile image */
+        .profile-page img::before {
+            content: "";
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2, #00d2ff);
+            opacity: 0.5;
+            animation: rotate 3s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .profile-page h1 {
+            font-size: 2.7rem;
+            line-height: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            animation: textShine 3s ease-in-out infinite;
+            background-size: 200% auto;
+        }
+
+        @keyframes textShine {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .profile-page h3 {
+            font-size: 1.3rem;
+            color: #6c63ff;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            animation: slideInFromBottom 1s ease-out 0.5s both;
+        }
+
+        @keyframes slideInFromBottom {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-page .social-media {
+            margin: 0.6rem 0 0.8rem;
+            animation: slideInFromBottom 1s ease-out 0.7s both;
+        }
+
+        .profile-page .social-media a {
+            display: inline-flex;
+            width: 2.5rem;
+            height: 2.5rem;
+            justify-content: center;
+            align-items: center;
+            background: transparent;
+            border: var(--border);
+            border-radius: 50%;
+            font-size: 1.3rem;
+            color: #6c63ff;
+            margin: 0.2rem;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-page .social-media a::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: var(--main-color);
+            transform: scale(0);
+            border-radius: 50%;
+            transition: transform 0.5s ease;
+            z-index: -1;
+        }
+
+        .profile-page .social-media a:hover::before {
+            transform: scale(1);
+        }
+
+        .profile-page .social-media a:hover {
+            color: var(--white-color);
+            transform: translateY(-5px) rotate(360deg);
+            box-shadow: 0 0 20px rgba(108, 99, 255, 0.7);
+        }
+
+        .profile-page p {
+            text-align: justify;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            animation: slideInFromBottom 1s ease-out 0.9s both;
+        }
+
+        .profile-page .btn-box {
+            margin-top: 1.2rem;
+            animation: slideInFromBottom 1s ease-out 1.1s both;
+        }
+
+        .btn {
+            display: inline-flex;
+            width: 9.5rem;
+            height: 3rem;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: 2px solid transparent;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--white-color);
+            font-weight: 600;
+            margin: 0 1rem;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(108, 99, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn:hover {
+            background: transparent;
+            border: 2px solid #6c63ff;
+            color: #6c63ff;
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(108, 99, 255, 0.6);
+        }
+
+        .btn-box .btn:nth-child(2) {
+            background: transparent;
+            border: 2px solid #00d2ff;
+            color: #00d2ff;
+        }
+
+        .btn-box .btn:nth-child(2):hover {
+            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            color: var(--white-color);
+            border-color: transparent;
+        }
+
+        .book-page.page-right {
+            position: absolute;
+            right: 0;
+            transform-style: preserve-3d;
+            padding: 1.5rem 2rem;
+            transform-origin: left;
+            transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        .book-page.page-right.turn {
+            transform: rotateY(-180deg);
+        }
+
+        .book-page .page-front,
+        .book-page .page-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--pages-color);
+            padding: 1.5rem 2rem;
+        }
+
+        .book-page .page-front {
+            transform: rotateY(0deg) translateZ(1px);
+        }
+
+        .book-page .page-back {
+            transform: rotateY(180deg) translateZ(1px);
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            background-size: 200% auto;
+            animation: titleSlide 3s ease-in-out infinite;
+        }
+
+        @keyframes titleSlide {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .edu-box {
+            border-left: 3px solid #6c63ff;
+            position: relative;
+        }
+
+        /* Animated border pulse */
+        .edu-box::before {
+            content: "";
+            position: absolute;
+            left: -3px;
+            top: 0;
+            width: 3px;
+            height: 0;
+            background: linear-gradient(to bottom, #00d2ff, #6c63ff);
+            animation: borderGrow 2s ease-out forwards;
+        }
+
+        @keyframes borderGrow {
+            to {
+                height: 100%;
+            }
+        }
+
+        .edu-box .edu-content {
+            position: relative;
+            padding-left: 1.6rem;
+            margin-bottom: 1.2rem;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .edu-box .edu-content:nth-child(1) { animation-delay: 0.2s; }
+        .edu-box .edu-content:nth-child(2) { animation-delay: 0.4s; }
+        .edu-box .edu-content:nth-child(3) { animation-delay: 0.6s; }
+        .edu-box .edu-content:nth-child(4) { animation-delay: 0.8s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px) translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) translateX(0);
+            }
+        }
+
+        .edu-box .edu-content p {
+            font-size: small;
+        }
+
+        .edu-box .edu-content::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -0.75rem;
+            width: 1.3rem;
+            height: 1.3rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(108, 99, 255, 0.7);
+            animation: dotPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes dotPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 15px rgba(108, 99, 255, 0.7);
+            }
+            50% {
+                transform: scale(1.15);
+                box-shadow: 0 0 25px rgba(108, 99, 255, 0.9);
+            }
+        }
+
+        .edu-content .year {
+            color: #6c63ff;
+            font-weight: 700;
+        }
+
+        .edu-content .year i {
+            margin-right: 0.4rem;
+            animation: iconBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes iconBounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-3px);
+            }
+        }
+
+        .edu-content h3 {
+            color: #764ba2;
+            font-weight: 600;
+        }
+
+        .number-page {
+            position: absolute;
+            bottom: 1.2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            color: #6c63ff;
+            font-weight: 700;
+        }
+
+        .number-page:hover {
+            transform: translateX(-50%) scale(1.3) rotate(360deg);
+            color: #764ba2;
+        }
+
+        .nextprev-btn {
+            position: absolute;
+            bottom: 0.9rem;
+            right: 1.5rem;
+            width: 2rem;
+            height: 2rem;
+            cursor: pointer;
+            font-size: 2rem;
+            color: #6c63ff;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .nextprev-btn:hover {
+            color: #764ba2;
+            transform: scale(1.3);
+            animation: bounce 0.6s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: scale(1.3) translateX(0);
+            }
+            50% {
+                transform: scale(1.3) translateX(10px);
+            }
+        }
+
+        .nextprev-btn.back {
+            left: 1.5rem;
+        }
+
+        .nextprev-btn.back:hover {
+            animation: bounceLeft 0.6s ease;
+        }
+
+        @keyframes bounceLeft {
+            0%, 100% {
+                transform: scale(1.3) translateX(0);
+            }
+            50% {
+                transform: scale(1.3) translateX(-10px);
+            }
+        }
+
+        .skill-box {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        .skill-box .skill-content {
+            background: linear-gradient(135deg, #ffffff 0%, #f3f4ff 100%);
+            padding: 1.2rem;
+            border-radius: 0.8rem;
+            border: 2px solid #e8eaf6;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            opacity: 0;
+            animation: skillSlideIn 0.6s ease forwards;
+        }
+
+        .skill-box .skill-content:nth-child(1) { animation-delay: 0.2s; }
+        .skill-box .skill-content:nth-child(2) { animation-delay: 0.4s; }
+
+        @keyframes skillSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px) rotateY(-20deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) rotateY(0);
+            }
+        }
+
+        .skill-box .skill-content:hover {
+            transform: translateY(-8px) rotateX(2deg);
+            box-shadow: 0 15px 40px rgba(108, 99, 255, 0.4);
+            border-color: #6c63ff;
+        }
+
+        .skill-content h3 {
+            font-size: 1.1rem;
+            color: #6c63ff;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-weight: 700;
+        }
+
+        .skill-content h3 i {
+            font-size: 1.3rem;
+            color: #764ba2;
+            animation: iconRotate 3s ease-in-out infinite;
+        }
+
+        @keyframes iconRotate {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(10deg);
+            }
+        }
+
+        .skill-content .content {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+            gap: 0.6rem;
+        }
+
+        .skill-content .content span {
+            background: #fff;
+            padding: 0.6rem 0.4rem;
+            border-radius: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--second-text-color);
+            border: 2px solid #e8eaf6;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .skill-content .content span:hover {
+            border-color: #6c63ff;
+            background: linear-gradient(135deg, #fff 0%, #f3f4ff 100%);
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 20px rgba(108, 99, 255, 0.4);
+        }
+
+        .skill-content .content span i {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: transform 0.3s ease;
+        }
+
+        .skill-content .content span:hover i {
+            transform: scale(1.2) rotate(360deg);
+        }
+
+        .achievement-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: linear-gradient(135deg, #fff, #f3f4ff);
+            border: 2px solid #6c63ff;
+            border-radius: 2rem;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.75rem;
+            margin: 0.2rem;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            font-weight: 600;
+            animation: badgeFloat 3s ease-in-out infinite;
+        }
+
+        .achievement-badge:nth-child(1) { animation-delay: 0s; }
+        .achievement-badge:nth-child(2) { animation-delay: 0.2s; }
+        .achievement-badge:nth-child(3) { animation-delay: 0.4s; }
+        .achievement-badge:nth-child(4) { animation-delay: 0.6s; }
+        .achievement-badge:nth-child(5) { animation-delay: 0.8s; }
+
+        @keyframes badgeFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .achievement-badge:hover {
+            transform: translateY(-8px) scale(1.1) rotate(2deg);
+            box-shadow: 0 8px 20px rgba(108, 99, 255, 0.5);
+            background: linear-gradient(135deg, #f3f4ff, #fff);
+        }
+
+        .contact-box {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            max-height: 36rem;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .contact-box form {
+            background: linear-gradient(135deg, #ffffff 0%, #f3f4ff 100%);
+            padding: 1rem;
+            border-radius: 0.6rem;
+            border: 2px solid #e8eaf6;
+            margin-bottom: 1rem;
+            animation: formSlideIn 0.8s ease-out;
+        }
+
+        @keyframes formSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .contact-box .field {
+            width: 100%;
+            background: #fff;
+            border: 2px solid #e8eaf6;
+            border-radius: 0.4rem;
+            padding: 0.65rem 0.8rem;
+            font-size: 0.8rem;
+            color: var(--text-color);
+            margin-bottom: 0.7rem;
+            transition: all 0.3s ease;
+            font-family: "Poppins", sans-serif;
+        }
+
+        .contact-box .field:focus {
+            border-color: #6c63ff;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+            outline: none;
+            transform: scale(1.02);
+        }
+
+        .contact-box .field.error {
+            border-color: #f093fb;
+            animation: shake 0.5s;
+        }
+
+        .contact-box .field.success {
+            border-color: #6c63ff;
+            animation: successPulse 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        @keyframes successPulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 0 20px rgba(108, 99, 255, 0.4);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .contact-box .field::placeholder {
+            color: #aaa;
+            font-size: 0.75rem;
+        }
+
+        .contact-box textarea {
+            resize: none;
+            height: 6rem;
+            line-height: 1.4;
+        }
+
+        .contact-box .btn {
+            cursor: pointer;
+            width: 100%;
+            height: 2.5rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin: 0;
+            box-shadow: 0 3px 10px rgba(108, 99, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .contact-box .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(108, 99, 255, 0.6);
+        }
+
+        .contact-box .btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .contact-info {
+            background: linear-gradient(135deg, #ffffff 0%, #f3f4ff 100%);
+            padding: 1rem;
+            border-radius: 0.6rem;
+            border: 2px solid #e8eaf6;
+            animation: formSlideIn 0.8s ease-out 0.2s both;
+        }
+
+        .contact-info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 0.6rem 0.7rem;
+            background: #fff;
+            border-radius: 0.4rem;
+            margin-bottom: 0.6rem;
+            border: 2px solid #e8eaf6;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .contact-info-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .contact-info-item:hover {
+            background: linear-gradient(135deg, #fff 0%, #f3f4ff 100%);
+            transform: translateX(8px);
+            border-color: #6c63ff;
+            box-shadow: 0 4px 15px rgba(108, 99, 255, 0.4);
+        }
+
+        .contact-info-item i {
+            font-size: 1.1rem;
+            color: #6c63ff;
+            min-width: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-info-item:hover i {
+            transform: scale(1.3) rotate(360deg);
+        }
+
+        .contact-info-item a,
+        .contact-info-item span {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.75rem;
+            line-height: 1.3;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .contact-info-item:hover a,
+        .contact-info-item:hover span {
+            color: #6c63ff;
+        }
+
+        .contact-box::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .contact-box::-webkit-scrollbar-track {
+            background: #e8eaf6;
+            border-radius: 10px;
+        }
+
+        .contact-box::-webkit-scrollbar-thumb {
+            background: #6c63ff;
+            border-radius: 10px;
+        }
+
+        .back-profile {
+            position: absolute;
+            bottom: 1.2rem;
+            right: 2rem;
+            width: 2rem;
+            height: 2rem;
+            background: transparent;
+            border: 2px solid #6c63ff;
+            border-radius: 0.3rem;
+            font-size: 1.1rem;
+            color: #6c63ff;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+        }
+
+        .back-profile:hover {
+            background: #6c63ff;
+            color: var(--white-color);
+            transform: rotate(360deg) scale(1.2);
+            box-shadow: 0 0 20px rgba(108, 99, 255, 0.7);
+        }
+
+        .back-profile p {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%) scale(0.5);
+            font-size: 1rem;
+            color: #6c63ff;
+            opacity: 0;
+            transition: all 0.5s ease;
+            font-weight: 700;
+        }
+
+        .back-profile:hover p {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+            top: -1.8rem;
+        }
+
+        .success-message {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(108, 99, 255, 0.6);
+            opacity: 0;
+            transform: translateX(400px);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+        }
+
+        .success-message.show {
+            opacity: 1;
+            transform: translateX(0);
+            animation: messagePulse 0.5s ease 0.5s;
+        }
+
+        @keyframes messagePulse {
+            0%, 100% {
+                transform: translateX(0) scale(1);
+            }
+            50% {
+                transform: translateX(0) scale(1.05);
+            }
+        }
+
+        .success-message i {
+            font-size: 1.5rem;
+            animation: checkRotate 0.6s ease;
+        }
+
+        @keyframes checkRotate {
+            0% {
+                transform: rotate(0deg) scale(0);
+            }
+            50% {
+                transform: rotate(180deg) scale(1.3);
+            }
+            100% {
+                transform: rotate(360deg) scale(1);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .wrapper {
+                width: 90%;
+                height: auto;
+            }
+
+            .profile-page h1 {
+                font-size: 2rem;
+            }
+
+            .skill-box {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loader">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">Loading Portfolio...</div>
+    </div>
+
+    <div class="success-message" id="successMessage">
+        <i class='bx bx-check-circle'></i>
+        <span>Message sent successfully!</span>
+    </div>
+
+    <div class="wrapper">
+        <div class="cover cover-left"></div>
+        <div class="cover cover-right"></div>
+
+        <div class="book">
+            <div class="book-page page-left">
+                <div class="profile-page">
+                    <img src="Gemini_Generated_Image_6x1kxn6x1kxn6x1k.png" alt="Selvam S">
+                    <h1>Selvam S</h1>
+                    <h3>Full Stack Developer</h3>
+
+                    <div class="social-media">
+                        <a href="https://www.linkedin.com/in/selvam-ss1821" target="_blank"><i class='bx bxl-linkedin'></i></a>
+                        <a href="https://github.com/selvam1821" target="_blank"><i class='bx bxl-github'></i></a>
+                        <a href="https://selvam1821.github.io/Portfolio_new/" target="_blank"><i class='bx bx-globe'></i></a>
+                    </div>
+                    <p id="tagline">🚀 Motivated Full Stack Developer seeking opportunities to design and develop scalable web applications using modern frontend and backend technologies. Strong foundation in JavaScript, React.js, Node.js, and databases to deliver efficient, user-focused solutions.</p>
+                    <div class="btn-box">
+                        <a href="RESUME_SELVAM(ATS).pdf" class="btn" download>Download Resume</a>
+                        <a href="tel:+916382498900" class="btn contact-me">Contact Me</a>
+                    </div>
+                </div>
+            </div>
+            <div class="book-page page-right turn" id="turn-1">
+                <div class="page-front">
+                    <h1 class="title">Education</h1>
+
+                    <div class="edu-box">
+                        <div class="edu-content">
+                            <span class="year"><i class='bx bxs-calendar'></i>2025</span>
+                            <h3>Master of Computer Applications (MCA)</h3>
+                            <p>Dhanalakshmi Srinivasan University, Trichy</p>
+                            <p>CGPA: 8.87</p>
+                        </div>
+
+                        <div class="edu-content">
+                            <span class="year"><i class='bx bxs-calendar'></i>2022</span>
+                            <h3>B.Sc. Computer Science</h3>
+                            <p>AVS College of Arts and Science, Salem</p>
+                            <p>CGPA: 7.9</p>
+                        </div>
+
+                        <div class="edu-content">
+                            <span class="year"><i class='bx bxs-calendar'></i>2019</span>
+                            <h3>Higher Secondary (HSC)</h3>
+                            <p>New Power Matric Higher Secondary School</p>
+                            <p>Percentage: 67% (State Board)</p>
+                        </div>
+
+                        <div class="edu-content">
+                            <span class="year"><i class='bx bxs-calendar'></i>2017</span>
+                            <h3>Secondary School (SSLC)</h3>
+                            <p>New Power Matric Higher Secondary School</p>
+                            <p>Percentage: 84% (State Board)</p>
+                        </div>
+                    </div>
+                    
+                    <span class="number-page">1</span>
+                    <span class="nextprev-btn" data-page="turn-1">
+                        <i class='bx bxs-chevron-right'></i>
+                    </span>
+                </div>
+
+                <div class="page-back">
+                    <h1 class="title">Work Experience</h1>
+
+                    <div class="edu-box">
+                        <div class="edu-content">
+                            <span class="year"><i class='bx bxs-briefcase'></i>Sept 2025 - Feb 2026</span>
+                            <h3>Full Stack Developer Intern</h3>
+                            <p>WHY Global Services, Chennai</p>
+                            <p>Built full-stack applications using MERN stack with RESTful API integration. Developed responsive, interactive user interfaces with performance optimization. Participated in Agile workflows including code reviews and sprint activities.</p>
+                        </div>
+
+                        <div class="edu-content">
+                            <h3>Key Projects</h3>
+                            <p><strong>Credit Card Fraud Detection</strong> - Built adaptive ML models using Python and Scikit-learn with XAI techniques for improved interpretability.</p>
+                            <p><strong>Client Feedback System</strong> - Developed comprehensive web-based system for collecting and managing user feedback with intuitive interface.</p>
+                        </div>
+
+                        <div class="edu-content">
+                            <h3>Achievements</h3>
+                            <p>
+                                <span class="achievement-badge">🏆 First Prize - APEX 2K23</span>
+                                <span class="achievement-badge">🏁 1st Place - RC Race</span>
+                                <span class="achievement-badge">🏏 District Cricket</span>
+                                <span class="achievement-badge">🏐 Zonal Volleyball</span>
+                                <span class="achievement-badge">📜 NPTEL IoT Certified</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <span class="number-page">2</span>
+                    <span class="nextprev-btn back" data-page="turn-1">
+                        <i class='bx bxs-chevron-left'></i>
+                    </span>
+                </div>
+            </div> 
+
+            <div class="book-page page-right turn" id="turn-2">
+                <div class="page-front">
+                    <h1 class="title">Certifications</h1>
+
+                    <div class="edu-box">
+                        <div class="edu-content">
+                            <span class="year"><i class='bx bxs-certification'></i>2024</span>
+                            <h3>Udemy Full-Stack Web Development Bootcamp</h3>
+                            <p>Completed comprehensive 62-hour bootcamp with practical project exposure covering frontend and backend development.</p>
+                        </div>
+
+                        <div class="edu-content">
+                            <span class="year"><i class='bx bxs-certification'></i>Jul-Oct 2024</span>
+                            <h3>Introduction to Internet of Things (IoT)</h3>
+                            <p>NPTEL (IIT Kharagpur) - 12-week certification covering IoT fundamentals, architecture, and applications.</p>
+                        </div>
+
+                        <div class="edu-content">
+                            <h3>Professional Certifications</h3>
+                            <p>• Full Stack Development MasterClass<br>
+                            • Front-End Development Specialization<br>
+                            • JavaScript Advanced Concepts<br>
+                            • ReactJS & Node.js Certification</p>
+                        </div>
+
+                        <div class="edu-content">
+                            <h3>Conference Presentations</h3>
+                            <p>Paper Presenter at NCITER-2024 on "Integration of Artificial Intelligence in Metaverse Through Cloud" and "Adaptive ML Models for Credit Card Fraud Detection"</p>
+                        </div>
+                    </div>
+
+                    <span class="number-page">3</span>
+                    <span class="nextprev-btn" data-page="turn-2">
+                        <i class='bx bxs-chevron-right'></i>
+                    </span>
+                </div>
+
+                <div class="page-back">
+                    <h1 class="title">My Skills</h1>
+                        
+                    <div class="skill-box">
+                        <div class="skill-content">
+                            <h3><i class='bx bx-code-alt'></i> Technical Skills</h3>
+                            <div class="content">
+                                <span><i class='bx bxl-html5'></i> HTML & CSS</span>
+                                <span><i class='bx bxl-javascript'></i> JavaScript</span>
+                                <span><i class='bx bxl-react'></i> React.js</span>
+                                <span><i class='bx bxl-bootstrap'></i> Bootstrap</span>
+                                <span><i class='bx bxl-figma'></i> Figma</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-content">
+                            <h3><i class='bx bxs-user-voice'></i> Soft Skills</h3>
+                            <div class="content">
+                                <span><i class='bx bx-chat'></i> Communication</span>
+                                <span><i class='bx bxs-group'></i> Team Work</span>
+                                <span><i class='bx bx-bulb'></i> Problem-Solving</span>
+                                <span><i class='bx bx-time'></i> Time Management</span>
+                                <span><i class='bx bx-brain'></i> Adaptability</span>
+                                <span><i class='bx bx-book-reader'></i> Self-Learning</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <span class="number-page">4</span>
+                    <span class="nextprev-btn back" data-page="turn-2">
+                        <i class='bx bxs-chevron-left'></i>
+                    </span>
+                </div> 
+            </div>
+
+            <div class="book-page page-right turn" id="turn-3">
+                <div class="page-front">
+                    <h1 class="title">Activities & Events</h1>
+                    
+                    <div class="edu-box">
+                        <div class="edu-content">
+                            <h3>Technical Symposiums</h3>
+                            <p>📍 Active participant in state and national-level technical symposiums<br><br>
+                            📍 Web Design, Role Play, and Poster Making at K. Ramakrishanan College of Engineering<br><br>
+                            📍 Logo Connection & Quick Quiz at St. Joseph's College, Trichy<br><br>
+                            📍 Inter College Competition at MOUNT ZIAN College of Engineering</p>
+                        </div>
+
+                        <div class="edu-content">
+                            <h3>Workshops & Training</h3>
+                            <p>• Barclays Lifeskills Programme (GTT Foundation)<br>
+                            • MNC-level Placement Guidance Program Webinar<br>
+                            • Web Development Internship at AristosTech India Pvt Ltd (Aug 2024)</p>
+                        </div>
+
+                        <div class="edu-content">
+                            <h3>Sports Achievements</h3>
+                            <p>🏏 SS Rajan Trophy Cricket Player<br>
+                            🏐 Zonal Level Volleyball Runner-up<br>
+                            🏏 District Level Cricket Selection (First Division)</p>
+                        </div>
+                    </div>
+
+                    <span class="number-page">5</span>
+                    <span class="nextprev-btn" data-page="turn-3">
+                        <i class='bx bxs-chevron-right'></i>
+                    </span>
+                </div> 
+                
+                <div class="page-back">
+                    <h1 class="title">Contact Me!</h1>
+
+                    <div class="contact-box">
+                        <form id="contactForm">
+                            <input type="text" class="field" id="name" placeholder="Full Name" required>
+                            <input type="email" class="field" id="email" placeholder="Email Address" required>
+                            <textarea cols="30" rows="10" class="field" id="message" placeholder="Your Message..." required></textarea>
+                            <input type="submit" class="btn" value="Send Message">
+                        </form>
+
+                        <div class="contact-info">
+                            <div class="contact-info-item">
+                                <i class='bx bx-envelope'></i>
+                                <a href="mailto:selvamsssankar@gmail.com">selvamsssankar@gmail.com</a>
+                            </div>
+                            <div class="contact-info-item">
+                                <i class='bx bxl-linkedin'></i>
+                                <a href="https://www.linkedin.com/in/selvam-ss1821" target="_blank">linkedin.com/in/selvam-ss1821</a>
+                            </div>
+                            <div class="contact-info-item">
+                                <i class='bx bx-globe'></i>
+                                <a href="https://selvam1821.github.io/Portfolio_new/" target="_blank">Portfolio Website</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <span class="number-page">6</span>
+                    <span class="nextprev-btn back" data-page="turn-3">
+                        <i class='bx bxs-chevron-left'></i>
+                    </span> 
+
+                    <a class="back-profile">
+                        <p>Profile</p>
+                        <i class='bx bxs-user'></i>
+                    </a>
+                </div> 
+            </div>                
+        </div>
+    </div>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particleCount = 15;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                document.body.appendChild(particle);
+            }
+        }
+
+        window.addEventListener('load', () => {
+            createParticles();
+            
+            setTimeout(() => {
+                document.querySelector('.loader').classList.add('hidden');
+            }, 1500);
+        });
+
+        window.addEventListener('load', () => {
+            const tagline = document.getElementById('tagline');
+            const text = tagline.textContent;
+            tagline.textContent = '';
+            
+            let i = 0;
+            function typeWriter() {
+                if (i < text.length) {
+                    tagline.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 20);
+                }
+            }
+            
+            setTimeout(typeWriter, 2500);
+        });
+
+        const pageTurnBtn = document.querySelectorAll(".nextprev-btn");
+
+        pageTurnBtn.forEach((el, index) => {
+            el.onclick = () => {
+                const pageTurnId = el.getAttribute("data-page");
+                const pageTurn = document.getElementById(pageTurnId);
+
+                if (pageTurn.classList.contains("turn")) {
+                    pageTurn.classList.remove("turn");
+                    setTimeout(() => {
+                        pageTurn.style.zIndex = 20 - index;
+                    }, 500);
+                } else {
+                    pageTurn.classList.add("turn");
+                    setTimeout(() => {
+                        pageTurn.style.zIndex = 20 + index;
+                    }, 500);
+                }
+            };
+        });
+
+        const pages = document.querySelectorAll(".book-page.page-right");
+        const contactMeBtn = document.querySelector(".btn.contact-me");
+
+        contactMeBtn.onclick = () => {
+            pages.forEach((page, index) => {
+                setTimeout(() => {
+                    page.classList.add("turn");
+                    setTimeout(() => {
+                        page.style.zIndex = 20 + index;
+                    }, 500);
+                }, (index + 1) * 200 + 100);
+            });
+        };
+
+        let totalPages = pages.length;
+        let pageNumber = 0;
+
+        const backProfileButton = document.querySelector(".back-profile");
+
+        backProfileButton.onclick = () => {
+            pages.forEach((_, index) => {
+                setTimeout(() => {
+                    reverseIndex();
+                    pages[pageNumber].classList.remove("turn");
+                    setTimeout(() => {
+                        reverseIndex();
+                        pages[pageNumber].style.zIndex = 10 + index;
+                    }, 500);
+                }, (index + 1) * 200 + 100);
+            });
+        };
+
+        function reverseIndex() {
+            pageNumber--;
+            if (pageNumber < 0) {
+                pageNumber = totalPages - 1;
+            }
+        }
+
+        const coverRight = document.querySelector(".cover.cover-right");
+        const pageLeft = document.querySelector(".book-page.page-left");
+
+        setTimeout(() => {
+            coverRight.classList.add("turn");
+        }, 2100);
+
+        setTimeout(() => {
+            coverRight.style.zIndex = -1;
+        }, 2800);
+
+        setTimeout(() => {
+            pageLeft.style.zIndex = 20;
+        }, 3200);
+
+        pages.forEach((_, index) => {
+            setTimeout(() => {
+                reverseIndex();
+                pages[pageNumber].classList.remove("turn");
+                setTimeout(() => {
+                    reverseIndex();
+                    pages[pageNumber].style.zIndex = 10 + index;
+                }, 500);
+            }, (index + 1) * 200 + 2100);
+        });
+
+        const form = document.getElementById('contactForm');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const messageInput = document.getElementById('message');
+
+        [nameInput, emailInput, messageInput].forEach(input => {
+            input.addEventListener('blur', function() {
+                if (!this.value.trim()) {
+                    this.classList.add('error');
+                    this.classList.remove('success');
+                } else {
+                    this.classList.remove('error');
+                    this.classList.add('success');
+                }
+            });
+
+            input.addEventListener('input', function() {
+                if (this.value.trim()) {
+                    this.classList.remove('error');
+                }
+            });
+        });
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let isValid = true;
+            
+            [nameInput, emailInput, messageInput].forEach(input => {
+                if (!input.value.trim()) {
+                    input.classList.add('error');
+                    isValid = false;
+                } else {
+                    input.classList.add('success');
+                }
+            });
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailInput.value)) {
+                emailInput.classList.add('error');
+                isValid = false;
+            }
+
+            if (isValid) {
+                const successMessage = document.getElementById('successMessage');
+                successMessage.classList.add('show');
+                
+                form.reset();
+                [nameInput, emailInput, messageInput].forEach(input => {
+                    input.classList.remove('success', 'error');
+                });
+
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>
